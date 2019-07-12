@@ -16,6 +16,12 @@
               v-if="task.description"
             >{{task.description}}</p>
           </div>
+          <input
+            class="block p-2 w-full bg-transparent"
+            placeholder="+ Enter new task"
+            @keyup.enter="createTask($event, column.tasks)"
+            type="text"
+          />
         </div>
       </div>
     </div>
@@ -41,6 +47,13 @@ export default {
     },
     closeTask () {
       this.$router.push({ name: 'board' })
+    },
+    createTask (e, tasks) {
+      console.log('created')
+      this.$store.commit('CREATE_TASK', {
+        tasks,
+        name: e.target.value
+      })
     }
   }
 }
