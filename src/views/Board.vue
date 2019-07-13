@@ -5,9 +5,11 @@
         class="column"
         v-for="(column, $colIndex) of board.columns"
         :key="$colIndex"
-        @drop="moveTask($event, column.tasks)"
+        draggable
+        @drop="moveTaskOrColumn($event, column.tasks, $colIndex)"
         @dragover.prevent
         @dragenter.prevent
+        @dragstart.self="pickupColumn($event, $colIndex)"
       >
         <div class="flex items-center mb-2 font-bold">{{column.name}}</div>
         <div class="list-reset">
@@ -18,6 +20,9 @@
             draggable
             @dragstart="pickupTask($event, $taskIndex, $colIndex)"
             @click="openTask(task)"
+            @dragover.prevent
+            @dragenter.prevent
+            @drop.stop="moveTaskOrColumn($event, column.tasks, $columnIndex, $taskIndex)"
           >
             <span class="w-full flex-no-shrink font-bold">{{task.name}}</span>
             <p
@@ -64,23 +69,53 @@ export default {
       })
       e.target.value = '';
     },
-    pickupTask (e, taskIndex, fromColIndex) {
+    pickupTask (e, taskIndex, fromColumnIndex) {
       e.dataTransfer.effectallowed = 'move';
       e.dataTransfer.dropEffect = 'move';
 
-      e.dataTransfer.setData('task-index', taskIndex)
-      e.dataTransfer.setData('from-column-index', fromColIndex)
+      e.dataTransfer.setData('from-task-index', taskIndex)
+      e.dataTransfer.setData('from-column-index', fromColumnIndex)
+      e.dataTransfer.setData('type', 'task')
     },
-    moveTask (e, toTasks) {
-      const fromColIndex = e.dataTransfer.getData('from-column-index')
-      const fromTasks = this.board.columns[fromColIndex].tasks
-      const taskIndex = e.dataTransfer.getData('task-index')
+    moveTask (e, toTasks, toTaskIndex) {
+      const fromColumnIndex = e.dataTransfer.getData('from-column-index')
+      const fromTasks = this.board.columns[fromColumnIndex].tasks
+      const fromTaskIndex = e.dataTransfer.getData('from-task-index')
 
       this.$store.commit('MOVE_TASK', {
         fromTasks,
         toTasks,
-        taskIndex
+        fromTaskIndex,
+        toTaskIndex
       })
+    },
+    pickupColumn (e, fromColumnIndex) {
+      e.dataTransfer.effectallowed = 'move';
+      e.dataTransfer.dropEffect = 'move';
+
+      e.dataTransfer.setData('from-column-index', fromColumnIndex)
+      e.dataTransfer.setData('type', 'column')
+    },
+    moveColumn (e, toColumnIndex) {
+      const fromColumnIndex = e.dataTransfer.getData('from-column-index')
+
+      this.$store.commit('MOVE_COLUMN', {
+        fromColumnIndex,
+        toColumnIndex
+      })
+    },
+    moveTaskOrColumn (e, toTasks, toColumnIndex, toTaskIndex) {
+      const type = e.dataTransfer.getData('type')
+
+      if (type === 'task') {
+        this.moveTask(
+          e,
+          toTasks,
+          toTaskIndex !== undefined ? toTaskIndex : toTasks.length
+        )
+      } else {
+        this.moveColumn(e, toColumnIndex)
+      }
     }
   }
 }
@@ -97,7 +132,7 @@ export default {
 }
 
 .board {
-  @apply p-4 bg-teal-dark h-full overflow-auto;
+  @apply p-4 bg-green-light h-full overflow-auto;
 }
 
 .task-bg {
