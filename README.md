@@ -1,35 +1,21 @@
-# twillo
+# gpgrello
 
-## Project setup
+A Trello-like app for keeping track of tasks in a large team
 
-```
-npm install
-```
+### Check out the live [Demo](https://gogrello.netlify.com).
 
-### Compiles and hot-reloads for development
+## Vue | Vuex | Node | Express | Mongo
 
-```
-npm run serve
-```
+## Commands
 
-### Compiles and minifies for production
+`npm install` - Project setup
 
-```
-npm run build
-```
+`npm run serve` - Compiles and hot-reloads for development
 
-### Run your tests
+`npm run build` - Compiles and minifies for production
 
-```
-npm run test
-```
+`npm run test` - Run your tests
 
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-### Customize configuration
+`npm run lint` - Lints and fixes files
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
