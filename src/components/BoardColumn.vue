@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import ColumnTask from './ColumnTask';
-import movingTaskOrColumnMixin from '@/mixins/movingTaskOrColumnMixin';
+import ColumnTask from './ColumnTask'
+import movingTaskOrColumnMixin from '@/mixins/movingTaskOrColumnMixin'
 
 export default {
   components: {
@@ -43,11 +43,11 @@ export default {
         tasks,
         name: e.target.value
       })
-      e.target.value = '';
+      e.target.value = ''
     },
     pickupColumn (e, fromColumnIndex) {
-      e.dataTransfer.effectallowed = 'move';
-      e.dataTransfer.dropEffect = 'move';
+      e.dataTransfer.effectallowed = 'move'
+      e.dataTransfer.dropEffect = 'move'
 
       e.dataTransfer.setData('from-column-index', fromColumnIndex)
       e.dataTransfer.setData('type', 'column')
