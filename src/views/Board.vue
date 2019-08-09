@@ -50,8 +50,7 @@ export default {
       this.$router.push({ name: 'board' })
     },
     createColumn () {
-      console.log(this.$store)
-      this.$store.dispatch('column/createColumn', this.newColumnName)
+      this.$store.dispatch('board/createColumn', this.newColumnName)
       this.newColumnName = ''
     }
   }

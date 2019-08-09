@@ -1,57 +1,28 @@
 import defaultBoard from '../../default-board'
-import { uuid } from '../../utils'
-
-// export const board = JSON.parse(localStorage.getItem('board')) || defaultBoard
 
 export const namespaced = true
 
-export default {
-  name: 'noobs',
-  columns: [
-    {
-      name: 'todo',
-      tasks: [
-        {
-          description: '',
-          name: 'first task',
-          id: uuid(),
-          userAssigned: null
-        },
-        {
-          description: '',
-          name: 'second task',
-          id: uuid(),
-          userAssigned: null
-        },
-        {
-          description: '',
-          name: 'and thrid',
-          id: uuid(),
-          userAssigned: null
-        }
-      ]
-    },
-    {
-      name: 'in-progress',
-      tasks: [
-        {
-          description: '',
-          name: 'first task',
-          id: uuid(),
-          userAssigned: null
-        }
-      ]
-    },
-    {
-      name: 'done',
-      tasks: [
-        {
-          description: '',
-          name: 'first task',
-          id: uuid(),
-          userAssigned: null
-        }
-      ]
-    }
-  ]
+export const state = JSON.parse(localStorage.getItem('board')) || defaultBoard
+
+export const actions = {
+  createColumn ({ commit }, name) {
+    console.log('createColumn action called')
+    commit('CREATE_COLUMN', name)
+  },
+  moveColumn ({ commit }, { fromColumnIndex, toColumnIndex }) {
+    commit('MOVE_COLUMN', fromColumnIndex, toColumnIndex)
+  }
+}
+
+export const mutations = {
+  CREATE_COLUMN (state, name) {
+    state.columns.push({
+      name,
+      tasks: []
+    })
+  },
+  MOVE_COLUMN (state, fromColumnIndex, toColumnIndex) {
+    const columnToMove = state.columns.splice(fromColumnIndex, 1)[0]
+    state.columns.splice(toColumnIndex, 0, columnToMove)
+  }
 }
