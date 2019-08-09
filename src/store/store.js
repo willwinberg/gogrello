@@ -5,7 +5,9 @@ import Vuex from 'vuex'
 import * as user from '@/store/modules/user'
 import * as task from '@/store/modules/task'
 import * as column from '@/store/modules/column'
-import * as board from '@/store/modules/board'
+import defaultBoard from '@/store/modules/board'
+// import defaultBoard from '../default-board'
+const board = JSON.parse(localStorage.getItem('board')) || defaultBoard
 
 Vue.use(Vuex)
 

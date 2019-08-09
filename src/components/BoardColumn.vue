@@ -39,7 +39,7 @@ export default {
   mixins: [movingTaskOrColumnMixin],
   methods: {
     createTask (e, tasks) {
-      this.$store.commit('CREATE_TASK', {
+      this.$store.commit('task/CREATE_TASK', {
         tasks,
         name: e.target.value
       })

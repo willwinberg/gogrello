@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     updateTask (e, key) {
-      this.$store.commit('UPDATE_TASK', {
+      this.$store.commit('task/UPDATE_TASK', {
         task: this.task,
         key: key,
         value: e.target.value

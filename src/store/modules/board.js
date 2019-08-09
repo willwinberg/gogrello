@@ -5,7 +5,7 @@ import { uuid } from '../../utils'
 
 export const namespaced = true
 
-export const board = {
+export default {
   name: 'noobs',
   columns: [
     {

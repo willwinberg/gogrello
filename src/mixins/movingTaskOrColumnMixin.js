@@ -13,25 +13,25 @@ export default {
       required: true
     }
   },
-  moveColumn (e, toColumnIndex) {
-    const fromColumnIndex = e.dataTransfer.getData('from-column-index')
-
-    this.$store.commit('MOVE_COLUMN', {
-      fromColumnIndex,
-      toColumnIndex
-    })
-  },
   methods: {
     moveTask (e, toTasks, toTaskIndex) {
       const fromColumnIndex = e.dataTransfer.getData('from-column-index')
       const fromTasks = this.board.columns[fromColumnIndex].tasks
       const fromTaskIndex = e.dataTransfer.getData('from-task-index')
 
-      this.$store.commit('MOVE_TASK', {
+      this.$store.commit('task/MOVE_TASK', {
         fromTasks,
         toTasks,
         fromTaskIndex,
         toTaskIndex
+      })
+    },
+    moveColumn (e, toColumnIndex) {
+      const fromColumnIndex = e.dataTransfer.getData('from-column-index')
+
+      this.$store.commit('column/MOVE_COLUMN', {
+        fromColumnIndex,
+        toColumnIndex
       })
     },
     moveTaskOrColumn (e, toTasks, toColumnIndex, toTaskIndex) {
