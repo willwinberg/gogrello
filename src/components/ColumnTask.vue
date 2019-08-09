@@ -14,14 +14,14 @@
     >
       <span class="w-full flex-no-shrink font-bold">{{task.name}}</span>
       <p class="w-full flex-no-shrink mt-1 text-sm" v-if="task.description">{{task.description}}</p>
-</app-drag>
+    </app-drag>
   </app-drop>
 </template>
 
 <script>
+import movingTaskOrColumnMixin from '@/mixins/movingTaskOrColumnMixin'
 import AppDrag from './AppDrag'
 import AppDrop from './AppDrop'
-import movingTaskOrColumnMixin from '@/mixins/movingTaskOrColumnMixin'
 
 export default {
   components: {

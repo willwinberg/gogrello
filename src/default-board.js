@@ -1,4 +1,3 @@
-// dada structure to power board view
 import { uuid } from './utils'
 
 export default {
