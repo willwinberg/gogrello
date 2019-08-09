@@ -1,7 +1,6 @@
 <template>
   <div
-    draggable
-    @dragstary.self="onDrag"
+    @drop.self="onDrop"
     @dragover.prevent
     @dragenter.prevent
   >
@@ -18,11 +17,10 @@ export default {
     }
   },
   methods: {
-    onDrag (e) {
-      e.dataTransfer.effectallowed = 'move'
-      e.dataTransfer.dropEffect = 'move'
+    onDrop (e) {
+      const transferData = JSON.parse(e.dataTransfer.getData('payload'))
 
-      e.dataTransfer.setData('payload', JSON.stringify(this.tansferData))
+      this.$emit('drop', transferData)
     }
   }
 }
