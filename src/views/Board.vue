@@ -51,9 +51,7 @@ export default {
     },
     createColumn () {
       console.log(this.$store)
-      this.$store.commit('column/CREATE_COLUMN', {
-        name: this.newColumnName
-      })
+      this.$store.dispatch('column/createColumn', this.newColumnName)
       this.newColumnName = ''
     }
   }

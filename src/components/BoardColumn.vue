@@ -53,7 +53,7 @@ export default {
       e.target.value = ''
     },
     pickupColumn (e, fromColumnIndex) {
-      e.dataTransfer.effectallowed = 'move'
+      e.dataTransfer.effectAllowed = 'move'
       e.dataTransfer.dropEffect = 'move'
 
       e.dataTransfer.setData('from-column-index', fromColumnIndex)

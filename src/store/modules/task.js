@@ -2,11 +2,6 @@ import { uuid } from '../../utils'
 
 export const namespaced = true
 
-export const state = {
-  title: '',
-  body: ''
-}
-
 export const mutations = {
   CREATE_TASK (state, { tasks, name }) {
     tasks.push({

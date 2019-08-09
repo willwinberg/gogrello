@@ -25,7 +25,9 @@ export default {
       })
     },
     moveColumn ({ fromColumnIndex }) {
+      console.log('called')
       this.$store.commit('column/MOVE_COLUMN', {
+        columnList: this.board.columns,
         fromColumnIndex,
         toColumnIndex: this.columnIndex
       })
