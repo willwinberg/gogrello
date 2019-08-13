@@ -1,6 +1,6 @@
 {
   "name": "gogrello",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -8,6 +8,8 @@
     "lint": "vue-cli-service lint",
     "api": "node api/server.js"
   },
+  "author": "willberg",
+  "license": "MIT",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
