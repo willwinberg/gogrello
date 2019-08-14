@@ -1,5 +1,5 @@
 const express = require('express')
-const Task = require('./models/Task')
+const Task = require('../models/TaskModel')
 const router = express.Router()
 
 router.route('/create').post((req, res) => {
