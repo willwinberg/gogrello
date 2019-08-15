@@ -1,8 +1,16 @@
 const mongoose = require('mongoose')
+const ObjectId = mongoose.Schema.Types.ObjectId
 
 const UserSchema = mongoose.Schema({
-  name: String,
-  description: String
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  board: [{ type: ObjectId, ref: 'Board' }]
 }, {
   timestamps: true
 })

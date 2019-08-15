@@ -4,8 +4,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 
-const taskRouter = require('./routes/taskRouter.js')
-const userRouter = require('./routes/userRouter.js')
+const taskRouter = require('./routers/taskRouter.js')
+const userRouter = require('./routers/userRouter.js')
 
 mongoose.connect('mongodb://localhost:27017/gogrellodb').then(
   () => { console.log('Database connection is successful') },
