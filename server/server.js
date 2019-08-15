@@ -9,6 +9,7 @@ const mongoose = require('mongoose')
 
 const taskRouter = require('./routers/taskRouter.js')
 const userRouter = require('./routers/userRouter.js')
+const { userExists } = require('./routers/helpers')
 
 mongoose.connect('mongodb://localhost:27017/gogrellodb').then(
   () => { console.log('Database connection is successful') },
@@ -38,8 +39,9 @@ strategies()
 //   res.json({ api: 'Running...' })
 // })
 
-server.use('/tasks', taskRouter)
-server.use('/users', userRouter)
+server.use('/api/users', userRouter)
+server.use('/api/tasks', taskRouter)
+server.post('/api/exists', userExists)
 
 const port = process.env.PORT || 4000
 

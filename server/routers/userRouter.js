@@ -1,7 +1,13 @@
 const express = require('express')
 const passport = require('passport');
 const User = require('../models/UserModel')
+const Board = require('../models/BoardModel')
+const Task = require('../models/TaskModel')
 
+const { decode, sign, randomString } = require('./helpers')
+
+const appUrl = process.env.APP_URL
+const EXPIRATION = 1000 * 60 * 60 * 12 // hours in milliseconds
 const router = express.Router()
 
 router
