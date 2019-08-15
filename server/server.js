@@ -5,6 +5,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 
 const taskRouter = require('./routes/taskRouter.js')
+const userRouter = require('./routes/userRouter.js')
 
 mongoose.connect('mongodb://localhost:27017/gogrellodb').then(
   () => { console.log('Database connection is successful') },
@@ -16,6 +17,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.use('/tasks', taskRouter)
+app.use('/users', userRouter)
 
 // app.get('/', function (req, res) {
 //   res.json({ api: 'Running...' })
