@@ -146,6 +146,94 @@ router
         }).catch(err => res.status(500).json({ message: err.message }))
       }).catch(err => res.status(322).json({ message: err.message }))
   })
-
+  .put('/password', passport.authenticate('bearer', { session: false }), (req, res) => {
+    const oldUser = req.user
+    const { oldPassword, newPassword } = decode(req.body.token)
+    User.findById(oldUser._id)
+      .then((user) => {
+        user.validify(oldPassword).then((isValid) => {
+          if (!isValid) {
+            res.status(403).json({ message: 'Old password invalid' })
+          }
+          oldUser.password = newPassword
+          oldUser.save()
+            .then((user) => {
+              res.status(200).json(user)
+            }).catch((err) => {
+              res.status(500).json({ message: err.message })
+            })
+        })
+          .catch(() => {
+            res.status(500).json({ message: 'Failed to validate password. It\'s not your fault.' })
+          })
+      })
+      .catch((err) => {
+        res.status(500).json({ err })
+      })
+  })
+  .post('/forgotpassword', (req, res) => {
+    const { email } = req.body
+    User.findOne({ email })
+      .then((user) => {
+        const userWasFound = user !== null
+        if (!userWasFound) {
+          return res.status(200).json({ userWasFound })
+        }
+        const resetNonce = randomString(20)
+        const payload = {
+          sub: user._id,
+          exp: Date.now() + EXPIRATION,
+          resetNonce
+        }
+        const resetToken = sign(payload)
+        const emailData = {
+          to: email,
+          subject: 'Gogrello password reset instructions.',
+          text: `Please use the following link to reset your password: ${appUrl}/resetpass/users/${resetToken}`,
+          html: `
+            <p>Please use the following link to reset your password.</p>
+            <p>${appUrl}/resetpass/users/${resetToken}</p>`
+        }
+        sendMail(emailData)
+          .then(() => {
+            user.update({ resetNonce })
+              .then(() => res.status(200).json({ userWasFound }))
+              .catch(() => res.status(500).json({ message: 'Ignore that email. I go to booboo box.' }))
+          })
+          .catch(() => res.status(500).json({ message: 'Failed to send password reset email.' }))
+      })
+      .catch((err) => {
+        res.status(500).json({ err })
+      })
+  })
+  .put('/resetpassword', (req, res) => {
+    const { newPasswordToken, resetToken } = req.body
+    const { sub, exp, resetNonce } = decode(resetToken)
+    const newPassword = decode(newPasswordToken)
+    User.findById(sub)
+      .then((user) => {
+        if (exp < Date.now()) {
+          return res.status(401)
+            .json({ message: 'Unauthorized. Token has expired.' })
+        }
+        if (!user.resetNonce || user.resetNonce !== resetNonce) {
+          return res.status(401)
+            .json({ message: 'Password reset token invalid. Please try again.' })
+        }
+        user.password = newPassword
+        user.save()
+          .then(() => {
+            user.update({ $unset: { resetNonce: '' } })
+              .then(() => {
+                res.status(200).json({ passwordChangeSuccess: true })
+              })
+          })
+          .catch((err) => {
+            res.status(500).json({ err })
+          })
+      }).catch((err) => {
+        res.status(500).json({ err })
+      })
+  })
 
 module.exports = router
