@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const ObjectId = mongoose.Schema.Types.ObjectId
 
 const UserSchema = mongoose.Schema({
-  userType: { type: String, default: 'user' },
+  type: { type: String, default: 'user' },
   email: { type: String, required: true, unique: true },
   password: { type: String, minlength: 8, required: true },
   firstName: { type: String, required: true },
@@ -17,7 +17,7 @@ const UserSchema = mongoose.Schema({
   tasks: [{ type: ObjectId, ref: 'Task' }],
   createdOn: { type: mongoose.Schema.Types.Date, default: Date.now },
   imgUrl: { type: String },
-  resetNonce: { type: String }
+  // resetNonce: { type: String }
 }, {
   timestamps: true
 })
