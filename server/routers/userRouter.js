@@ -55,5 +55,32 @@ router
         res.status(500).json({ message: err.message })
       })
   })
+  .post('/login', (req, res) => {
+    const { email, password } = decode(req.body.token)
+    User.findOne({ email })
+      .then((user) => {
+        if (!user) {
+          return res.status(400).json({ message: 'User record not found.' })
+        }
+        user
+          .validify(password)
+          .then((passwordValid) => {
+            if (!passwordValid) {
+              return res.status(401).json({ message: 'Invalid credentials.' })
+            }
+            const payload = {
+              exp: Date.now() + EXPIRATION,
+              sub: user._id,
+              type: user.type
+            }
+            const token = sign(payload)
+            const profile = user
+            return res.json({ profile, token })
+          })
+          .catch(err => res.status(500).json(err))
+      })
+      .catch(err => res.status(500).json(err))
+  })
+
 
 module.exports = router
