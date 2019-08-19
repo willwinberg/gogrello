@@ -1,6 +1,6 @@
 const express = require('express')
 const passport = require('passport')
-const Task = require('../models/TaskModel')
+const Task = require('../models/taskModel')
 const router = express.Router()
 
 router
