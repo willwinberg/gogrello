@@ -12,7 +12,7 @@ const userRouter = require('./routers/userRouter.js')
 const { userExists } = require('./routers/helpers')
 var birds = require('./routers/birds')
 
-mongoose.connect('mongodb://localhost:27017/gogrellodb', { useNewUrlParser: true }).then(
+mongoose.connect('mongodb://localhost:27017/gogrellodb', {useNewUrlParser: true}).then(
   () => { console.log('Database connection is successful') },
   err => { console.log('Error when connecting to the database' + err) }
 )
@@ -39,14 +39,14 @@ strategies()
 // app.get('/', function (req, res) {
 //   res.json({ api: 'Running...' })
 // })
-
+app.get('/', (req, res) => res.send('Hello World!'))
 app.use('/api/users', userRouter)
 app.use('/api/tasks', taskRouter)
 app.post('/api/exists', userExists)
 app.use('/birds', birds)
 
-const port = process.env.PORT || 4000
+const port = process.env.PORT || 3000
 
-app.listen(() => {
+app.listen(port, () => {
   console.log('Listening on port ' + port)
 })

@@ -13,6 +13,8 @@ const router = express.Router()
 router
   .get('/', passport.authenticate('bearer', { session: false }),
     (req, res) => {
+      console.log('inside')
+
       const userId = req.user.id
       User
         .findById(userId).populate('board')
