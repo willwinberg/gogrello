@@ -1,8 +1,8 @@
 const express = require('express')
 const passport = require('passport')
-const User = require('../models/UserModel')
-const Board = require('../models/BoardModel')
-const Task = require('../models/TaskModel')
+const User = require('../models/userModel')
+const Board = require('../models/boardModel')
+const Task = require('../models/taskModel')
 
 const { decode, sign, randomString } = require('./helpers')
 

@@ -2,8 +2,8 @@ const passport = require('passport')
 const jwt = require('jsonwebtoken')
 const BearerStrategy = require('passport-http-bearer').Strategy
 const secret = process.env.ACCESS_KEY
-const User = require('./users/user/userModel')
-const Admin = require('./users/admin/adminModel')
+const User = require('./models/userModel')
+// const Admin = require('./users/admin/adminModel')
 
 function strategies () {
   // serialize/deserialize user
@@ -15,12 +15,12 @@ function strategies () {
   })
 
   // serialize/deserialize admin
-  passport.serializeUser((admin, done) => {
-    done(null, admin._id)
-  })
-  passport.deserializeUser((adminId, done) => {
-    Admin.findById(adminId, (err, user) => done(err, user))
-  })
+  // passport.serializeUser((admin, done) => {
+  //   done(null, admin._id)
+  // })
+  // passport.deserializeUser((adminId, done) => {
+  //   Admin.findById(adminId, (err, user) => done(err, user))
+  // })
 
   // strategy for handling requests for restricted endpoints
   // checks for JWT on Bearer token in Auth headers
