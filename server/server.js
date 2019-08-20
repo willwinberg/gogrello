@@ -12,7 +12,7 @@ const userRouter = require('./routers/userRouter.js')
 const { userExists } = require('./routers/helpers')
 var birds = require('./routers/birds')
 
-mongoose.connect('mongodb://localhost/gogrellodb', { useNewUrlParser: true }).then(
+mongoose.connect('mongodb://localhost:27017/gogrellodb', { useNewUrlParser: true }).then(
   () => { console.log('Database connection is successful') },
   err => { console.log('Error when connecting to the database' + err) }
 )
