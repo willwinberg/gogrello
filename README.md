@@ -1,6 +1,7 @@
 # gpgrello
 
 A Trello-like app for keeping track of tasks in a large team
+Built with Vue, Express, Mongo and Node
 
 ### Check out the live [Demo](https://gogrello.netlify.com).
 
